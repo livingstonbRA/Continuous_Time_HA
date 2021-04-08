@@ -8,7 +8,7 @@
 %
 % (2) Modify the parameters script 'code/+setup/+params/get_params.m' and make sure that 
 % run_opts.mode is equal to 'get_params'. Note that all parameter defaults
-% are set in the file HACTLib/+model_objects/ParamsDefaults.m, and get_params.m overrides
+% are set in the file +model_objects/ParamsDefaults.m, and get_params.m overrides
 % these defaults. Any parameters not in get_params.m are set to their
 % defaults. See the attributes of Params.m for a list of all
 % parameters.
@@ -31,7 +31,7 @@ warning('off', 'MATLAB:nearlySingularMatrix')
 % -------------------------------------------------------------------------
 
 param_opts.calibrate = false;
-param_opts.fast = true; % use small grid for debugging
+param_opts.fast = false; % use small grid for debugging
 param_opts.ComputeMPCS = true;
 param_opts.ComputeMPCS_illiquid = false;
 param_opts.SimulateMPCS = false; % also estimate MPCs by simulation

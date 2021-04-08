@@ -31,7 +31,7 @@ classdef Grid < handle
         % the liquid asset grid.
         nb_neg;
 
-        % Linear index for b = 0 along the second dimension.
+        % Linear index for b = 0 along the first dimension.
         loc0b;
 
 		% Linear index for a = 0 along the second dimension.

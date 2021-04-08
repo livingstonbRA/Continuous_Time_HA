@@ -1,4 +1,4 @@
-function [outparams, n] = overall_htm_target(param_opts)
+function [outparams, n] = one_asset(param_opts)
 	import params.scf2019struct
     
     scf = scf2019struct();
