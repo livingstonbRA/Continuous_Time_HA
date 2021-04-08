@@ -1,0 +1,13 @@
+output
+*.m~
+input
+temp
+*.asv
+*sublime-workspace
+*sublime-project
+*.mat
+.DS_Store
+*.pdf
+**/old
+*.docx*
+**/docs
