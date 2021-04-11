@@ -134,10 +134,17 @@ classdef Calibrator < handle
 
 			if obj.n > 1
 				% Guide solver to reduce r_a if illiq asset very high
-				dv = [dv; max(v(1) - 200, 0) * current_params.r_a];
+				% dv = [dv; max(v(1) - 200, 0) * current_params.r_a];
 
 				% Guide solver to increase r_a if illiq asset very low
-				dv = [dv; 10 * min(v(1) - 1, 0) * (0.1 - current_params.r_a)];
+				% dv = [dv; 10 * min(v(1) - 1, 0) * (0.1 - current_params.r_a)];
+
+				diff_mean = obj.get_results_value(results, 'diff_mean');
+				% Guide solver to reduce r_a if illiq asset very high
+				dv = [dv; max(diff_mean - 150, 0) * current_params.r_a];
+
+				% Guide solver to increase r_a if illiq asset very low
+				dv = [dv; 10 * min(diff_mean - 1, 0) * (0.1 - current_params.r_a)];
 			end
 
 			obj.reset_param_options(current_params);
