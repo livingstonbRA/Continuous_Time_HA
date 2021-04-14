@@ -20,12 +20,12 @@ function [outparams, n] = one_asset(param_opts)
     shared_params.bmax = 500;
     shared_params.rho = 0.0039;
 
-    median_calibration = shared_params;
-    median_calibration.calibration_vars = {'rho'};
-    median_calibration.calibration_bounds = {[0.002, 0.02]};
-    median_calibration.calibration_stats = {'totw'};
-    median_calibration.calibration_targets = [4.1];
-    median_calibration.calibration_scales = [1];
+    calibration = shared_params;
+    calibration.calibration_vars = {'rho'};
+    calibration.calibration_bounds = {[0.002, 0.02]};
+    calibration.calibration_stats = {'totw'};
+    calibration.calibration_targets = [scf.mean_totw];
+    calibration.calibration_scales = [1];
     
     incomedirs = {'continuous_a/no_measurement_error',...
         'continuous_a/measurement_error_20pc',...
@@ -40,7 +40,7 @@ function [outparams, n] = one_asset(param_opts)
     params = {};
 
     for ii = 1:4
-        params{ii} = median_calibration;
+        params{ii} = calibration;
         params{ii}.name = IncomeDescriptions{ii}; 
         params{ii}.income_dir = incomedirs{ii};
         params{ii}.IncomeDescr = IncomeDescriptions{ii};

@@ -99,7 +99,7 @@ function [outparams, n] = overall_htm_target(param_opts)
 
                             rho_bds = [0.0005, 0.02];
                             % r_a_bds = [0.008, 0.02];
-                            r_a_bds = [0.003, 0.02];
+                            r_a_bds = [0.003, 0.04];
                             params{ii}.KFE_maxiters = 1e6;
                             % params{ii}.a_lb = 0.3;
 
@@ -117,7 +117,7 @@ function [outparams, n] = overall_htm_target(param_opts)
                         % params{ii}.calibration_stats = {'diff_mean', 'liqw'};
                         % params{ii}.calibration_targets = [4.1-0.56, 0.56];
                         params{ii}.calibration_stats = {'totw', 'median_liqw'};
-                        params{ii}.calibration_targets = [4.1, 0.046];
+                        params{ii}.calibration_targets = [scf.mean_totw, scf.median_liqw];
                         params{ii}.calibration_scales = [1, 10];
 
                         ii = ii + 1;
