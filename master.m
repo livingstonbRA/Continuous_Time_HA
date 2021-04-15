@@ -30,7 +30,7 @@ warning('off', 'MATLAB:nearlySingularMatrix')
 % SET OPTIONS
 % -------------------------------------------------------------------------
 
-param_opts.calibrate = false;
+param_opts.calibrate = true;
 param_opts.fast = false; % use small grid for debugging
 param_opts.ComputeMPCS = true;
 param_opts.ComputeMPCS_illiquid = false;
@@ -38,7 +38,7 @@ param_opts.SimulateMPCS = false; % also estimate MPCs by simulation
 param_opts.ComputeMPCS_news = false;
 param_opts.SimulateMPCS_news = false;
 param_opts.DealWithSpecialCase = false; % need to recode this
-param_opts.param_index = 1;
+param_opts.param_index = 2;
 param_opts.makePlots = false; % not coded yet
 
 run_opts.check_nparams = false;
@@ -108,12 +108,14 @@ if ~isempty(p.calibrator)
     %     runFinal = false;
     % end
 
-    zval = p.calibrator.target_result;
-    z1bad = (zval(1) < 3.7) || (zval(1) > 4.5);
-    z2bad = (zval(2) < 0.02) || (zval(2) > 0.1);
+    if ~p.OneAsset
+        zval = p.calibrator.target_result;
+        z1bad = (zval(1) < 3.7) || (zval(1) > 4.5);
+        z2bad = (zval(2) < 0.02) || (zval(2) > 0.1);
 
-    if z1bad || z2bad
-        runFinal = false;
+        if z1bad || z2bad
+            runFinal = false;
+        end
     end
 end
 

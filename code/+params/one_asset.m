@@ -16,30 +16,33 @@ function [outparams, n] = one_asset(param_opts)
     shared_params.b_gcurv_pos = 0.2;
     shared_params.OneAsset = true;
     shared_params.Bequests = false;
+    shared_params.r_b = 0.02 / 4;
 
     shared_params.bmax = 500;
     shared_params.rho = 0.0039;
 
     calibration = shared_params;
     calibration.calibration_vars = {'rho'};
-    calibration.calibration_bounds = {[0.002, 0.02]};
+    calibration.calibration_bounds = {[0.0001, 0.02]};
     calibration.calibration_stats = {'totw'};
     calibration.calibration_targets = [scf.mean_totw];
     calibration.calibration_scales = [1];
     
-    incomedirs = {'continuous_a/no_measurement_error',...
+    incomedirs = {'continuous_a/original',...
+        'continuous_a/no_measurement_error',...
         'continuous_a/measurement_error_20pc',...
         'continuous_a/measurement_error_33pc',...
         'continuous_a/measurement_error_50pc'};
 
-    IncomeDescriptions = {'cont_a, no meas err',...
+    IncomeDescriptions = {'cont_a, original',...
+        'cont_a, no meas err',...
         'cont_a, meas err 20pc',...
         'cont_a, meas err 33pc',...
         'cont_a, meas err 50pc'};
 
     params = {};
 
-    for ii = 1:4
+    for ii = 1:5
         params{ii} = calibration;
         params{ii}.name = IncomeDescriptions{ii}; 
         params{ii}.income_dir = incomedirs{ii};
