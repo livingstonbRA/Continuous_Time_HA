@@ -68,7 +68,7 @@ function [outparams, n] = overall_htm_target(param_opts)
         median_calibration.calibration_vars = {'rho', 'r_a'};
 
         kappa_1s = [0.2:0.2:1, 1.5:0.5:5];
-        kappa_2s = [0.5, 1.0, 1.5];
+        kappa_2s = [0.25, 0.5, 1.0, 1.5];
 
         calibrations = {median_calibration};
 

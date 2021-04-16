@@ -193,7 +193,7 @@ classdef ParamsDefaults < handle
     	% ------------ approximation parameters -----------
     	% HJB loop
     	hjb_options;
-    	HJB_maxiters = 3000; % maximal allowable number of HJB iterations
+    	HJB_maxiters = 1e5; % maximal allowable number of HJB iterations
     	HJB_tol = 1e-8; % critical value
     	HJB_delta = 1e6; % step size
         HJB_implicit = false;
