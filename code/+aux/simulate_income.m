@@ -56,12 +56,11 @@ end
 
 function options = parse_inputs(varargin)
   parser = inputParser;
-  addParameter(parser, 'n_sim', 5e5);
-  addParameter(parser, 't_sim', 200);
-  addParameter(parser, 't_burn', 100);
+  addParameter(parser, 'n_sim', 1e5);
+  addParameter(parser, 't_sim', 50);
+  addParameter(parser, 't_burn', 50);
   addParameter(parser, 'normalize', false);
     addParameter(parser, 'initial_index', 0);
-    addParameter(parser, 'r', 0.005);
     parse(parser, varargin{:});
 
   options = parser.Results;
@@ -79,19 +78,30 @@ function yvals = simulate(options, cumdist, discrete_cumtrans, values)
 
   draws0 = rand(options.n_sim, options.t_burn+1, 'single');
   [~, yind0] = max(draws0(:,1) <= cumdist', [], 2);
+  yind1 = zeros(options.n_sim, 1, 'single');
 
   for t = 1:options.t_burn
     for k = 1:numel(cumdist)
       idx = yind0 == k;
-      [~, yind0(idx)] = max(draws0(idx,t+1) <= discrete_cumtrans(k,:), [], 2);
+      [~, yind1(idx)] = max(draws0(idx,t+1) <= discrete_cumtrans(k,:), [], 2);
     end
+
+    yind0 = yind1;
   end
 
-    dt = 1 / options.t_sim;
-    yvals = zeros(options.n_sim, 1, 'single');
-    for t = 1:options.t_sim*4
-        yvals = yvals + dt * values(yind0);
+  draws0 = rand(options.n_sim, options.t_sim * 4, 'single');
+  dt = 1 / options.t_sim;
+  yvals = zeros(options.n_sim, 1, 'single');
+
+  for t = 1:options.t_sim*4
+    for k = 1:numel(cumdist)
+      idx = yind0 == k;
+      [~, yind1(idx)] = max(draws0(idx,t) <= discrete_cumtrans(k,:), [], 2);
     end
+    yind0 = yind1;
+
+    yvals = yvals + dt * values(yind0);
+  end
 end
 
 function statistics = create_table(Ey0, values, quarterly_expectation)
